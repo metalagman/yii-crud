@@ -5,12 +5,28 @@
 
 class DeleteAction extends CAction
 {
-    public
-        $modelClass,
-        $successMessage = false,
-        $errorMessage = false,
-        $redirectAction = 'index';
+    public $modelClass;
+    public $successMessage = false;
+    public $errorMessage = false;
+    /** @var Closure */
+    public $redirectHandler;
 
+    /**
+     * @inheritdoc
+     */
+    public function __construct($controller,$id)
+    {
+        parent::__construct($controller, $id);
+
+        if (!$this->redirectHandler instanceof Closure)
+            $this->redirectHandler = function(CActiveRecord $model) {
+                $this->controller->redirect(['index']);
+            };
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function run($id)
     {
         $class = $this->modelClass;
@@ -35,7 +51,8 @@ class DeleteAction extends CAction
                 if ($this->errorMessage != false)
                     Yii::app()->user->setFlash('error', $this->errorMessage);
             }
-            $this->controller->redirect([$this->redirectAction]);
+
+            $this->redirectHandler->__invoke($model);
         }
     }
 }

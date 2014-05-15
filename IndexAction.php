@@ -5,13 +5,16 @@
 
 class IndexAction extends CAction
 {
-    public
-        $modelClass,
-        $viewFile = 'index';
+    public $modelClass;
+    public $viewFile = 'index';
 
+    /**
+     * @inheritdoc
+     */
     public function run()
     {
         $class = $this->modelClass;
+        /** @var SmartActiveRecord $model */
         $model = new $class('search');
         $model->unsetAttributes();
 

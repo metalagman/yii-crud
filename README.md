@@ -14,10 +14,16 @@ class NewsController extends CController
             'create' => [
                 'class' => 'ext.yii-crud.CreateAction',
                 'modelClass' => $this->className,
+                'redirectHandler' => function(CActiveRecord $model) {
+                    $this->redirect(['view', 'id' => $model->primaryKey]);
+                },
             ],
             'update' => [
                 'class' => 'ext.yii-crud.UpdateAction',
                 'modelClass' => $this->className,
+                'redirectHandler' => function(CActiveRecord $model) {
+                    $this->redirect(['view', 'id' => $model->primaryKey]);
+                },
             ],
             'delete' => [
                 'class' => 'ext.yii-crud.DeleteAction',

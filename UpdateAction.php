@@ -5,18 +5,34 @@
 
 class UpdateAction extends CAction
 {
-    public
-        $modelClass,
-        $successMessage = false,
-        $errorMessage = false,
-        $redirectAction = 'view',
-        $redirectAppendId = true,
-        $useTransaction = true,
-        $viewFile = 'update';
+    public $modelClass;
+    public $successMessage = false;
+    public $errorMessage = false;
+    public $useTransaction = true;
+    public $viewFile = 'update';
+    /** @var Closure */
+    public $redirectHandler;
 
+    /**
+     * @inheritdoc
+     */
+    public function __construct($controller,$id)
+    {
+        parent::__construct($controller, $id);
+
+        if (!$this->redirectHandler instanceof Closure)
+            $this->redirectHandler = function(CActiveRecord $model) {
+                $this->controller->redirect(['index']);
+            };
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function run($id)
     {
         $class = $this->modelClass;
+        /** @var SmartActiveRecord $model */
         $model = $class::loadModel($id);
         $model->scenario = 'update';
 
@@ -44,10 +60,7 @@ class UpdateAction extends CAction
                 if ($this->successMessage != false)
                     Yii::app()->user->setFlash('success', $this->successMessage);
 
-                $redirect = [$this->redirectAction];
-                if ($this->redirectAppendId)
-                    $redirect['id'] = $model->id;
-                $this->controller->redirect($redirect);
+                $this->redirectHandler->__invoke($model);
             }
         }
 

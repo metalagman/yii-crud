@@ -5,13 +5,16 @@
 
 class ViewAction extends CAction
 {
-    public
-        $modelClass,
-        $viewFile = 'view';
+    public $modelClass;
+    public $viewFile = 'view';
 
+    /**
+     * @inheritdoc
+     */
     public function run($id)
     {
         $class = $this->modelClass;
+        /** @var SmartActiveRecord $model */
         $model = $class::loadModel($id);
         $this->controller->render($this->viewFile, ['model' => $model]);
     }
