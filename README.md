@@ -12,29 +12,29 @@ class NewsController extends CController
     {
         return [
             'create' => [
-                'class' => 'ext.yii-crud.CreateAction',
+                'class' => 'vendor.lagman.yii-crud.CreateAction',
                 'modelClass' => $this->className,
                 'redirectHandler' => function(CActiveRecord $model) {
                     $this->redirect(['view', 'id' => $model->primaryKey]);
                 },
             ],
             'update' => [
-                'class' => 'ext.yii-crud.UpdateAction',
+                'class' => 'vendor.lagman.yii-crud.UpdateAction',
                 'modelClass' => $this->className,
                 'redirectHandler' => function(CActiveRecord $model) {
                     $this->redirect(['view', 'id' => $model->primaryKey]);
                 },
             ],
             'delete' => [
-                'class' => 'ext.yii-crud.DeleteAction',
+                'class' => 'vendor.lagman.yii-crud.DeleteAction',
                 'modelClass' => $this->className,
             ],
             'view' => [
-                'class' => 'ext.yii-crud.ViewAction',
+                'class' => 'vendor.lagman.yii-crud.ViewAction',
                 'modelClass' => $this->className,
             ],
             'index' => [
-                'class' => 'ext.yii-crud.crud.IndexAction',
+                'class' => 'vendor.lagman.yii-crud.crud.IndexAction',
                 'modelClass' => $this->className,
             ],
         ];
