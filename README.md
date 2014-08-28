@@ -34,7 +34,7 @@ class NewsController extends CController
                 'modelClass' => $this->className,
             ],
             'index' => [
-                'class' => 'vendor.lagman.yii-crud.crud.IndexAction',
+                'class' => 'vendor.lagman.yii-crud.IndexAction',
                 'modelClass' => $this->className,
             ],
         ];
